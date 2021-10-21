@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2021 Birmingham City University. All rights reserved.
+ * Author:  Reza Shams (rezashams86@gmail.com)
+ */
 package com.hotel.usermanagement.Config;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -11,6 +15,7 @@ import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
+
 
 @EnableWs
 @Configuration

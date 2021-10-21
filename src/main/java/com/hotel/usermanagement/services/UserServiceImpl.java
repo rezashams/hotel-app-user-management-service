@@ -1,9 +1,15 @@
+/*
+ * Copyright (c) 2021 Birmingham City University. All rights reserved.
+ * Author:  Reza Shams (rezashams86@gmail.com)
+ */
+
 package com.hotel.usermanagement.services;
 
 import com.hotel.usermanagement.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,28 +21,29 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Set<User> findAll() {
-        return null;
+        return  new HashSet<>(users.values());
     }
 
     @Override
-    public User findById(Long aLong) {
-        return null;
+    public User findById(Long userId) {
+        return users.get(userId);
     }
 
     @Override
     public User save(User user) {
-        user.setUserId(++userId);
+        if(user.getUserId()==0)
+            user.setUserId(++userId);
         users.put(user.getUserId(),user);
         return user;
     }
 
     @Override
-    public void delete(User object) {
-
+    public void delete(User user) {
+       users.entrySet().removeIf(entry -> entry.getValue().equals(user));
     }
 
     @Override
-    public void deleteById(Long aLong) {
-
+    public void deleteById(Long userId) {
+        //TODO implement it
     }
 }
