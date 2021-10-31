@@ -22,7 +22,8 @@ import java.util.Set;
 public class UserEndpoint
 {
     private static final String NAMESPACE_URI = "http://www.hotelapp.com/xml/user";
-
+    //access to wsdl
+    //http://localhost:8080/service/userWsdl.wsdl
     private UserService userService;
 
     @Autowired
@@ -126,6 +127,17 @@ public class UserEndpoint
         }
         DeleteUserResponse response = new DeleteUserResponse();
         response.setServiceStatus(serviceStatus);
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "greetUserRequest")
+    @ResponsePayload
+    public GreetUserResponse greetUser(@RequestPayload GreetUserRequest request) {
+        System.out.println("hiiiiiiiiiiiiiiiii");
+        GreetUserResponse response = new GreetUserResponse();
+        GreetUserRes greetUserRes= new GreetUserRes();
+        greetUserRes.setReturn("Welcome: "+request.getGreetUser().getArg0());
+        response.setGreetUserResponse(greetUserRes);
         return response;
     }
 }

@@ -87,4 +87,30 @@
         </xs:sequence>
     </xs:complexType>
 
+
+    <xs:element name="greetUserRequest" >
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="greetUser" type="tns:greetUser"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="greetUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="greetUserResponse" type="tns:greetUserRes"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="greetUser">
+        <xs:sequence>
+            <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="greetUserRes">
+        <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
 </xs:schema>
