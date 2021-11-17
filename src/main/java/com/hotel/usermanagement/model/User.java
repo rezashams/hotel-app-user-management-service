@@ -7,41 +7,43 @@ package com.hotel.usermanagement.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="articles")
+@Table(name="user_")
 public class User {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="user_id")
+    @Column(name="id", nullable = false)
     private long userId;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name="address")
-    private String address;
 
-    @Column(name="email")
+    @Column(name="email", nullable = false)
     private String email;
 
-    @Column(name="password")
+    @Column(name="password", nullable = false)
     private String password;
 
-    @Column(name="role")
-    private String role;
+    @Column(name="is_student", nullable = false)
+    private  boolean isStudent;
+
+    @Column(name="is_manager", nullable = false)
+    private boolean isManager;
 
     public User() {}
 
-    public User(String firstName, String lastName, String address, String email, String passowrd, String role) {
+    public User(String firstName, String lastName, String email,
+                String password,boolean isManager, boolean isStudent) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address = address;
         this.email = email;
-        this.password = passowrd;
-        this.role = role;
+        this.password = password;
+        this.isManager = isManager;
+        this.isStudent = isStudent;
     }
 
     public long getUserId() {
@@ -68,14 +70,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -92,12 +86,20 @@ public class User {
         this.password = string;
     }
 
-    public String getRole() {
-        return role;
+    public boolean isStudent() {
+        return isStudent;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setStudent(boolean student) {
+        isStudent = student;
+    }
+
+    public boolean isManager() {
+        return isManager;
+    }
+
+    public void setManager(boolean manager) {
+        isManager = manager;
     }
 
     @Override
@@ -121,7 +123,6 @@ public class User {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
                 '}';
     }
 
@@ -130,8 +131,8 @@ public class User {
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.password = builder.password;
-        this.role = builder.role;
-        this.address = builder.address;
+        this.isManager = builder.isManager;
+        this.isStudent = builder.isStudent;
         this.email = builder.email;
     }
 
@@ -139,20 +140,21 @@ public class User {
         private  String firstName;
         private  String lastName;
         private String password;
-        private String address;
         private String email;
-        private String role;
+        private boolean isStudent;
+        private boolean isManager;
 
         public UserBuilder() {
         }
 
-        public UserBuilder(String firstName, String lastName, String address, String email, String password, String role) {
+        public UserBuilder(String firstName, String lastName, String email,
+                           String password, boolean isStudent, boolean isManager) {
             this.firstName = firstName;
             this.lastName = lastName;
             this.password = password;
-            this.address = address;
             this.email = email;
-            this.role = role;
+            this.isManager= isManager;
+            this.isStudent = isStudent;
         }
 
         public UserBuilder setFirstName(String firstName) {
@@ -165,8 +167,8 @@ public class User {
             return this;
         }
 
-        public UserBuilder setAddress(String address) {
-            this.address = address;
+        public UserBuilder setIsStudent(boolean isStudent) {
+            this.isStudent = isStudent;
             return this;
         }
 
@@ -174,8 +176,8 @@ public class User {
             this.email = email;
             return this;
         }
-        public UserBuilder setRole(String role) {
-            this.role = role;
+        public UserBuilder setIsManager(boolean isManager) {
+            this.isManager = isManager;
             return this;
         }
         public UserBuilder setPassword(String password) {

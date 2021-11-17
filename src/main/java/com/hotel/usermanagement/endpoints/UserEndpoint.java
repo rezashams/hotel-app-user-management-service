@@ -73,10 +73,10 @@ public class UserEndpoint
         User user = new User.UserBuilder()
                 .setFirstName(userInfo.getFirstName())
                 .setLastName(userInfo.getLastName())
-                .setAddress(userInfo.getAddress())
+               // .setAddress(userInfo.getAddress()) TODO
                 .setPassword(userInfo.getPassword())
                 .setEmail(userInfo.getEmail())
-                .setRole(userInfo.getRole())
+              //  .setRole(userInfo.getRole()) TODO
                 .build();
         user = userService.save(user);
         UserInfo userInfoResponse = new UserInfo();
@@ -97,10 +97,10 @@ public class UserEndpoint
         User user = new User.UserBuilder()
                 .setFirstName(userInfo.getFirstName())
                 .setLastName(userInfo.getLastName())
-                .setAddress(userInfo.getAddress())
+               // .setAddress(userInfo.getAddress()) TODO
                 .setPassword(userInfo.getPassword())
                 .setEmail(userInfo.getEmail())
-                .setRole(userInfo.getRole())
+                //.setRole(userInfo.getRole()) TODO
                 .build();
         user.setUserId(userInfo.getUserId());
         userService.save(user);
@@ -133,7 +133,6 @@ public class UserEndpoint
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "greetUserRequest")
     @ResponsePayload
     public GreetUserResponse greetUser(@RequestPayload GreetUserRequest request) {
-        System.out.println("hiiiiiiiiiiiiiiiii");
         GreetUserResponse response = new GreetUserResponse();
         GreetUserRes greetUserRes= new GreetUserRes();
         greetUserRes.setReturn("Welcome: "+request.getGreetUser().getArg0());
