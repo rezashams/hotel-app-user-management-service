@@ -1,4 +1,4 @@
-    DROP TABLE IF EXISTS room;
+    DROP TABLE IF EXISTS user_;
 
     CREATE TABLE user_ (
     id INT  PRIMARY KEY,

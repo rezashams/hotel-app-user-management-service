@@ -1,7 +1,9 @@
 package com.hotel.usermanagement.repositories;
 
-import org.springframework.stereotype.Component;
+import com.hotel.usermanagement.model.User;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-@Component
-public class UserRepository  {
-   }
+@Repository
+public interface UserRepository extends CrudRepository<User,Long> {
+}

@@ -74,10 +74,10 @@
             <xs:element name="userId" type="xs:long"/>
             <xs:element name="firstName" type="xs:string"/>
             <xs:element name="lastName" type="xs:string"/>
-            <xs:element name="address" type="xs:string"/>
+            <xs:element name="Manager" type="xs:boolean"/>
             <xs:element name="email" type="xs:string"/>
             <xs:element name="password" type="xs:string"/>
-            <xs:element name="role" type="xs:string"/>
+            <xs:element name="Student" type="xs:boolean"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="serviceStatus">

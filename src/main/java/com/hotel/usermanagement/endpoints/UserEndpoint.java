@@ -35,7 +35,7 @@ public class UserEndpoint
     @ResponsePayload
     public GetUserByIdResponse getUser(@RequestPayload GetUserByIdRequest request) {
         UserInfo userInfo = new UserInfo();
-        User user =  userService.findById(request.getUserId());
+        User user =  userService.getUserById(request.getUserId());
         ServiceStatus serviceStatus = new ServiceStatus();
         if (user == null ) {
             serviceStatus.setStatusCode("FAIL");
@@ -55,7 +55,7 @@ public class UserEndpoint
     public GetAllUsersResponse getAllUsers() {
         GetAllUsersResponse response = new GetAllUsersResponse();
         List<UserInfo> userInfos = new ArrayList<>();
-        Set<User> users = userService.findAll();
+        List<User> users = userService.findAll();
         for (User usr:users) {
             UserInfo userInfo = new UserInfo();
             BeanUtils.copyProperties(usr, userInfo);
@@ -73,12 +73,12 @@ public class UserEndpoint
         User user = new User.UserBuilder()
                 .setFirstName(userInfo.getFirstName())
                 .setLastName(userInfo.getLastName())
-               // .setAddress(userInfo.getAddress()) TODO
                 .setPassword(userInfo.getPassword())
                 .setEmail(userInfo.getEmail())
-              //  .setRole(userInfo.getRole()) TODO
+                .setIsStudent(userInfo.isStudent())
+                .setIsManager(userInfo.isManager())
                 .build();
-        user = userService.save(user);
+        user = userService.saveUser(user);
         UserInfo userInfoResponse = new UserInfo();
         BeanUtils.copyProperties(user, userInfoResponse);
         response.setUserInfo(userInfoResponse);
@@ -97,13 +97,13 @@ public class UserEndpoint
         User user = new User.UserBuilder()
                 .setFirstName(userInfo.getFirstName())
                 .setLastName(userInfo.getLastName())
-               // .setAddress(userInfo.getAddress()) TODO
                 .setPassword(userInfo.getPassword())
                 .setEmail(userInfo.getEmail())
-                //.setRole(userInfo.getRole()) TODO
+                .setIsManager(userInfo.isManager())
+                .setIsStudent(userInfo.isStudent())
                 .build();
         user.setUserId(userInfo.getUserId());
-        userService.save(user);
+        userService.updateUser(user);
         ServiceStatus serviceStatus = new ServiceStatus();
         serviceStatus.setStatusCode("SUCCESS");
         serviceStatus.setMessage("User Updated Successfully");
@@ -115,13 +115,13 @@ public class UserEndpoint
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteUserRequest")
     @ResponsePayload
     public DeleteUserResponse deleteUser(@RequestPayload DeleteUserRequest request) {
-        User user = userService.findById(request.getUserId());
+        User user = userService.getUserById(request.getUserId());
         ServiceStatus serviceStatus = new ServiceStatus();
         if (user == null ) {
             serviceStatus.setStatusCode("FAIL");
             serviceStatus.setMessage("User Not Available");
         } else {
-            userService.delete(user);
+            userService.deleteUserById(user.getUserId());
             serviceStatus.setStatusCode("SUCCESS");
             serviceStatus.setMessage("User Deleted Successfully");
         }

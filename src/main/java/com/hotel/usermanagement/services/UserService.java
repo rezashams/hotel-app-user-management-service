@@ -6,5 +6,17 @@ package com.hotel.usermanagement.services;
 
 import com.hotel.usermanagement.model.User;
 
-public interface UserService extends CrudService<User,Long>{
+import java.util.List;
+
+public interface UserService{
+
+    List<User> findAll();
+
+    User saveUser(User user);
+
+    User getUserById(Long id);
+
+    User updateUser(User user);
+
+    void deleteUserById(Long id);
 }
