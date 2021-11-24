@@ -6,7 +6,7 @@ package com.hotel.usermanagement.model;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name="user")
 @Table(name="user_")
 public class User {
 

@@ -24,7 +24,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
-        userRepository.findAll().forEach(users::add);
+        Iterator<User> roomIterator= userRepository.findAll().iterator();
+        while(roomIterator.hasNext()) {
+            users.add(roomIterator.next());
+        }
         return users;
     }
 
@@ -35,7 +38,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+
+        return userRepository.findById(id);
     }
 
     @Override

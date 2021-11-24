@@ -1,7 +1,7 @@
     DROP TABLE IF EXISTS user_;
 
     CREATE TABLE user_ (
-    id INT  PRIMARY KEY,
+    id BIGINT  PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
