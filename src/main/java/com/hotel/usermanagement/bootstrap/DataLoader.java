@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 @Component
@@ -28,8 +29,9 @@ public class DataLoader implements CommandLineRunner {
         user.setLastName("shams");
         user.setEmail("rezashams86@gmail.com");
         user.setPassword("123");
-        user.setStudent(true);
-        user.setManager(true);
+        user.setStudent(false);
+        user.setManager(false);
+        user.setLastUpdate(new Date());
         userService.saveUser(user);
         System.out.println("Load Data ...");
     }

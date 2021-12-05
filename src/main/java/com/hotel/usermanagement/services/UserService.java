@@ -19,4 +19,13 @@ public interface UserService{
     User updateUser(User user);
 
     void deleteUserById(Long id);
+
+    boolean isUserAlreadyRegistered(String email);
+
+    User signIn(String email, String password);
+
+    boolean isManager(long userId);
+
+    boolean isStudent(long userId);
+
 }

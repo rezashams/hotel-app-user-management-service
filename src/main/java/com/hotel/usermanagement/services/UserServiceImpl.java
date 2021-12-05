@@ -33,6 +33,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User saveUser(User user) {
+        User existUser = userRepository.findByEmail(user.getEmail());
+        if(existUser !=null) return null;
         return userRepository.save(user);
     }
 
@@ -44,11 +46,38 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User updateUser(User user) {
+        User existUser = userRepository.findByEmail(user.getEmail());
+        if(existUser !=null) return null;
         return userRepository.save(user);
     }
 
     @Override
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isUserAlreadyRegistered(String email) {
+        User user = userRepository.findByEmail(email);
+        return user==null?false:true;
+    }
+
+    @Override
+    public User signIn(String email, String password) {
+        return userRepository.signIn(email, password);
+    }
+
+    @Override
+    public boolean isManager(long userId) {
+        User user = userRepository.findById(userId);
+        if (user ==null) return false;
+        return user.isManager()?true:false;
+    }
+
+    @Override
+    public boolean isStudent(long userId) {
+        User user = userRepository.findById(userId);
+        if (user ==null) return false;
+        return user.isStudent()?true:false;
     }
 }

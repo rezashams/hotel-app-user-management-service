@@ -5,6 +5,7 @@
 package com.hotel.usermanagement.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity(name="user")
 @Table(name="user_")
@@ -22,7 +23,7 @@ public class User {
     private String lastName;
 
 
-    @Column(name="email", nullable = false)
+    @Column(name="email", nullable = false,unique=true)
     private String email;
 
     @Column(name="password", nullable = false)
@@ -34,16 +35,20 @@ public class User {
     @Column(name="is_manager", nullable = false)
     private boolean isManager;
 
+    @Column(name ="last_update")
+    private Date lastUpdate;
+
     public User() {}
 
     public User(String firstName, String lastName, String email,
-                String password,boolean isManager, boolean isStudent) {
+                String password,boolean isManager, boolean isStudent, Date lastUpdate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.isManager = isManager;
         this.isStudent = isStudent;
+        this.lastUpdate = lastUpdate;
     }
 
     public long getUserId() {
@@ -102,6 +107,14 @@ public class User {
         isManager = manager;
     }
 
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -134,6 +147,7 @@ public class User {
         this.isManager = builder.isManager;
         this.isStudent = builder.isStudent;
         this.email = builder.email;
+        this.lastUpdate= builder.lastUpdate;
     }
 
     public static class UserBuilder {
@@ -143,18 +157,20 @@ public class User {
         private String email;
         private boolean isStudent;
         private boolean isManager;
+        private Date lastUpdate;
 
         public UserBuilder() {
         }
 
         public UserBuilder(String firstName, String lastName, String email,
-                           String password, boolean isStudent, boolean isManager) {
+                           String password, boolean isStudent, boolean isManager, Date lastUpdate) {
             this.firstName = firstName;
             this.lastName = lastName;
             this.password = password;
             this.email = email;
             this.isManager= isManager;
             this.isStudent = isStudent;
+            this.lastUpdate = lastUpdate;
         }
 
         public UserBuilder setFirstName(String firstName) {
@@ -182,6 +198,11 @@ public class User {
         }
         public UserBuilder setPassword(String password) {
             this.password = password;
+            return this;
+        }
+
+        public UserBuilder setLastUpdate(Date lastUpdate) {
+            this.lastUpdate = lastUpdate;
             return this;
         }
 

@@ -69,15 +69,78 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    <xs:element name="isUserAlreadyRegisteredRequest" >
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="email" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="isUserAlreadyRegisteredResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="isRegisteredBefore" type="xs:boolean"/>
+                <xs:element name="serviceStatus" type="tns:serviceStatus"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="signInRequest" >
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="email" type="xs:string"/>
+                <xs:element name="password" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="signInResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userInfo" type="tns:userInfo"/>
+                <xs:element name="serviceStatus" type="tns:serviceStatus"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="isManagerRequest" >
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="isManagerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="isManager" type="xs:boolean"/>
+                <xs:element name="serviceStatus" type="tns:serviceStatus"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="isStudentRequest" >
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="isStudentResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="isStudent" type="xs:boolean"/>
+                <xs:element name="serviceStatus" type="tns:serviceStatus"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <xs:complexType name="userInfo">
         <xs:sequence>
             <xs:element name="userId" type="xs:long"/>
             <xs:element name="firstName" type="xs:string"/>
             <xs:element name="lastName" type="xs:string"/>
-            <xs:element name="Manager" type="xs:boolean"/>
+            <xs:element name="manager" type="xs:boolean"/>
             <xs:element name="email" type="xs:string"/>
             <xs:element name="password" type="xs:string"/>
-            <xs:element name="Student" type="xs:boolean"/>
+            <xs:element name="student" type="xs:boolean"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="serviceStatus">
@@ -88,29 +151,7 @@
     </xs:complexType>
 
 
-    <xs:element name="greetUserRequest" >
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="greetUser" type="tns:greetUser"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="greetUserResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="greetUserResponse" type="tns:greetUserRes"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:complexType name="greetUser">
-        <xs:sequence>
-            <xs:element name="arg0" type="xs:string" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
-    <xs:complexType name="greetUserRes">
-        <xs:sequence>
-            <xs:element name="return" type="xs:string" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
+
+
 
 </xs:schema>
