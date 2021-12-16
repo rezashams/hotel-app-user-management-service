@@ -121,7 +121,7 @@ public class UserEndpoint
         User existUser = userService.updateUser(user);
         if (existUser==null) {
             serviceStatus.setStatusCode("FAILED");
-            serviceStatus.setMessage("The email has been registered before!");
+            serviceStatus.setMessage("The email has not been registered before!");
         } else {
             serviceStatus.setStatusCode("SUCCESS");
             serviceStatus.setMessage("User Updated Successfully");
