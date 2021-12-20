@@ -9,11 +9,13 @@ import com.hotel.usermanagement.services.UserService;
 import com.hotelapp.xml.user.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -107,28 +109,31 @@ public class UserEndpoint
 
         UserInfo userInfo = request.getUserInfo();
         ServiceStatus serviceStatus = new ServiceStatus();
-        try{
-        User user = new User.UserBuilder()
-                .setFirstName(userInfo.getFirstName())
-                .setLastName(userInfo.getLastName())
-                .setPassword(userInfo.getPassword())
-                .setEmail(userInfo.getEmail())
-                .setIsManager(userInfo.isManager())
-                .setIsStudent(userInfo.isStudent())
-                .setLastUpdate(new Date())
-                .build();
-        user.setUserId(userInfo.getUserId());
-        User existUser = userService.updateUser(user);
-        if (existUser==null) {
-            serviceStatus.setStatusCode("FAILED");
-            serviceStatus.setMessage("The email has not been registered before!");
-        } else {
-            serviceStatus.setStatusCode("SUCCESS");
-            serviceStatus.setMessage("User Updated Successfully");
-        }
-    } catch (Exception e) {
-        serviceStatus.setStatusCode("FAIL");
-        serviceStatus.setMessage("Server Error 500!");
+        try {
+            User user = new User.UserBuilder()
+                    .setFirstName(userInfo.getFirstName())
+                    .setLastName(userInfo.getLastName())
+                    .setPassword(userInfo.getPassword())
+                    .setEmail(userInfo.getEmail())
+                    .setIsManager(userInfo.isManager())
+                    .setIsStudent(userInfo.isStudent())
+                    .setLastUpdate(new Date())
+                    .build();
+            user.setUserId(userInfo.getUserId());
+            User existUser = userService.updateUser(user);
+            if (existUser == null) {
+                serviceStatus.setStatusCode("FAILED");
+                serviceStatus.setMessage("The email has not been registered before!");
+            } else {
+                serviceStatus.setStatusCode("SUCCESS");
+                serviceStatus.setMessage("User Updated Successfully");
+            }
+        } catch (DataIntegrityViolationException e) {
+            serviceStatus.setStatusCode("FAIL");
+            serviceStatus.setMessage("This email is used before");
+        } catch (Exception e) {
+            serviceStatus.setStatusCode("FAIL");
+            serviceStatus.setMessage("Server Error 500!");
     }
 
         UpdateUserResponse response = new UpdateUserResponse();
@@ -166,7 +171,7 @@ public class UserEndpoint
         IsUserAlreadyRegisteredResponse response = new IsUserAlreadyRegisteredResponse();
         try {
             boolean res= userService.isUserAlreadyRegistered(request.getEmail());
-            serviceStatus.setStatusCode("SUCCESS");
+            serviceStatus.setStatusCode(res?"SUCCESS":"FAIL");
             serviceStatus.setMessage("SUCCESS");
             response.setIsRegisteredBefore(res);
         } catch (Exception e){

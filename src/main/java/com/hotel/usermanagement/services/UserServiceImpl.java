@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User updateUser(User user) {
-        User existUser = userRepository.findByEmail(user.getEmail());
-        if(existUser !=null) return null;
+      //  User existUser = userRepository.findByEmail(user.getEmail());
+      //  if(existUser !=null) return null;
         return userRepository.save(user);
     }
 
